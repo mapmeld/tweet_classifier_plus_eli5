@@ -5,6 +5,7 @@ import numpy as np
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegressionCV
+from sklearn.linear_model import RidgeClassifierCV
 from sklearn.pipeline import make_pipeline
 from sklearn.metrics import classification_report
 
@@ -26,37 +27,31 @@ x = []
 y = []
 x_test = []
 y_test = []
+
+# memory plz
+datarows = datarows[:10000]
+
 test_cutoff = int(0.85 * len(datarows))
 
-index = 0
 for line in datarows:
-    index += 1
-    if index < test_cutoff:
-        x.append(line[0])
-        if line[1] == 'True':
-            y.append(0)
-        else:
-            y.append(1)
+    x.append(line[0])
+    if line[1] == 'True':
+        y.append(0)
     else:
-        x_test.append(line[0])
-        if line[1] == 'True':
-            y_test.append(0)
-        else:
-            y_test.append(1)
+        y.append(1)
 
 x = np.array(x)
-x_test = np.array(x_test)
 y = np.array(y)
-y_test = np.array(y_test)
 
 tfid = TfidfVectorizer(sublinear_tf=True, max_df=0.5, stop_words='english')
 x = tfid.fit_transform(x).todense()
-#print(x)
-gnb = LogisticRegressionCV()
-gnb.fit(x, y)
 
-y_predicted = gnb.predict(x_test)
-print(classification_report(y_test, y_predicted, target_names=['known weird', 'less weird']))
+#gnb = LogisticRegressionCV()
+gnb = RidgeClassifierCV()
+gnb.fit(x[:testcutoff], y[:testcutoff])
 
-explained = eli5.sklearn.explain_prediction.explain_prediction_sklearn(gnb, x[0], vec=tfid, target_names=y)
+y_predicted = gnb.predict(x[testcutoff:])
+print(classification_report(y[testcutoff:], y_predicted, target_names=['known weird', 'less weird']))
+
+explained = eli5.sklearn.explain_prediction.explain_prediction_sklearn(gnb, datarows[0][0], vec=tfid, target_names=['known weird', 'less weird'])
 print(explained)
