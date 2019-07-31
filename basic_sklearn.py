@@ -59,13 +59,12 @@ tfid = TfidfVectorizer(sublinear_tf=True, max_df=0.5, stop_words='english')
 x = tfid.fit_transform(x).todense()
 
 classifiers = [
-    #LogisticRegressionCV, RidgeClassifierCV,
+    LogisticRegressionCV,
+    RidgeClassifierCV,
     #Perceptron
     #PassiveAggressiveClassifier,
     # SGDClassifier,
-    #LinearSVC,
-    # SVC,
-    #, NuSVC
+    #LinearSVC, SVC, NuSVC
 
     #LinearDiscriminantAnalysis, # 0.50
 #    KNeighborsClassifier, # 0.51

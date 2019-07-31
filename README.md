@@ -17,5 +17,5 @@ Goals for Part 3:
 virtualenv -p python3 .env
 source .env/bin/activate
 
-pip3 install scikit-learn eli5 numpy xgboost
+pip3 install scikit-learn eli5 numpy xgboost flask flask-cors
 ```
