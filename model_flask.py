@@ -14,7 +14,7 @@ from eli5 import explain_prediction, format_as_text
 
 positives = []
 negatives = []
-rowcutoff = 4000
+rowcutoff = 10000
 
 with open('bset_automl_2.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')

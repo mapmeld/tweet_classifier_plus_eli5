@@ -51,10 +51,10 @@ function workOnReply(index) {
         // flip score for consistency
         score *= -1;
       }
-      let color = (score < 0) ? 0 : 120;
-      let percent = Math.round((1 - 5 * Math.abs(score)) * 100);
+      let color = (score < 0) ? 0 : 240;
+      let percent = Math.round((1 - 4.5 * Math.abs(score)) * 100);
 
-      let rg = new RegExp('\\s' + word + '\\s', 'i');
+      let rg = new RegExp('\\s' + word + '\\s', 'ig');
       if (rg.test(tweetText)) {
         tweetText = tweetText.replace(rg, ' <span style="opacity: 0.8; background-color: hsl(' + color + ', 100.00%, ' + percent + '.00%)">' + word + '</span> ')
       } else {
